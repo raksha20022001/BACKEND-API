@@ -3,28 +3,30 @@ const dbConnect = require("./config/dbConnect");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
 
+const {errorHandler , notFound }= require("./middlewares/error/errorHandler");
+
 const app = express();
 
-const {userRegisterCtrl , userLoginCtrl} = require("./controllers/users/userCtrl");
+const userRoutes = require("./route/users/usersRoute");
 
 dotenv.config();
-const port = process.env.PORT || 4000;
 
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(express.json());
 
+//Databse
 dbConnect();
 
-app.post("/api/users/register", userRegisterCtrl );
+//users route
+app.use("/",userRoutes);
 
-app.post("/api/users/login" ,userLoginCtrl );
+//error handler
+app.use(notFound);
+app.use(errorHandler);
 
-app.get("/api/users", (req,res) => {
-    res.json({
-        user : "Fetch all user"
-    });
-});
 
+//Server
+const port = process.env.PORT || 4000;
 app.listen(port ,() =>{
     console.log(`server is working on localhost: ${port}`);
 } )
