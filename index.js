@@ -18,7 +18,7 @@ app.use(express.json());
 dbConnect();
 
 //users route
-app.use("/",userRoutes);
+app.use("/api/users",userRoutes);
 
 //error handler
 app.use(notFound);
