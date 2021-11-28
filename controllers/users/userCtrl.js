@@ -1,6 +1,8 @@
 const User = require("../../model/user/User");
 const expressAsyncHandler = require("express-async-handler");
 const generateToken = require("../../token/generateToken");
+const validateMongodbID = require("../../utils/validateMongodbID");
+
 
 //----------------------------------------------------
 //REGISTER USER 
@@ -38,6 +40,7 @@ const userLoginController = expressAsyncHandler(
         //check if user exists
        if(userFound && (await userFound.isPasswordMatched(password))){
          res.json({
+           _id: userFound?._id,
            firstName :  userFound?.firstName,
            lastName : userFound?.lastName,
            email : userFound?.email,
@@ -53,4 +56,59 @@ const userLoginController = expressAsyncHandler(
       }
 )
 
-module.exports = { userRegisterCtrl ,userLoginController };
+
+//--------------------------------------
+//FETCH USERS
+//--------------------------------------
+
+const fetchUsers = expressAsyncHandler(
+  async (req,res) => {
+    try{
+       const users = await User.find({});
+       res.json(users);
+    }catch (error){
+      res.json(error);
+    }
+  }
+)
+
+//---------------------------------------------
+//DELETE USER
+//---------------------------------------------
+
+const deleteUser =  expressAsyncHandler(
+  async (req,res) => {
+    const {id} = req.params;
+    validateMongodbID(id)
+   try {
+     const deletedUser = await User.findByIdAndDelete(id);
+     res.json("deleted User")
+   } catch (error) {
+     res.json(error);
+   }
+  }
+   
+)
+
+//----------------------------------------------------------
+//FETCH USER DETAILS WITH ID
+//-----------------------------------------------------------
+
+const fetchUserDetailsCtrl = expressAsyncHandler(async (req,res) => {
+     const {id} = req.params;
+     validateMongodbID(id);
+     try {
+       const userDetails = await User.findById(id);
+       res.json(userDetails);
+     } catch (error) {
+        res.json(error);
+     }
+})
+
+module.exports = {
+   userRegisterCtrl ,
+   userLoginController ,
+   fetchUsers , 
+   deleteUser ,
+   fetchUserDetailsCtrl 
+  };
