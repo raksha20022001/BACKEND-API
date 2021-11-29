@@ -7,7 +7,7 @@ const userRegisterCtrl = expressAsyncHandler(
   console.log(req.body);
   const userExist = await User.findOne({email : req?.body?.email});
 
-  if(userExist) throw new Error("User already registered");
+  if(userExist) throw new Error("User already exist");
   
   try {
     //Register user

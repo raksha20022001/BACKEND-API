@@ -2,6 +2,8 @@ const express = require("express");
 const dbConnect = require("./config/dbConnect");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
+// code by Saurabh
+const cors = require("cors");
 
 const {errorHandler , notFound }= require("./middlewares/error/errorHandler");
 
@@ -13,6 +15,9 @@ dotenv.config();
 
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(express.json());
+
+// cors by Saurabh
+app.use(cors());
 
 //Databse
 dbConnect();
