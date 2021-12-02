@@ -1,7 +1,8 @@
 const express = require("express");
-const dbConnect = require("./config/dbConnect");
+const dbConnect = require("./config/db/dbConnect");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
+dotenv.config();
 
 const {errorHandler , notFound }= require("./middlewares/error/errorHandler");
 
@@ -9,7 +10,7 @@ const app = express();
 
 const userRoutes = require("./route/users/usersRoute");
 
-dotenv.config();
+
 
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(express.json());
