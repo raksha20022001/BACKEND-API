@@ -113,7 +113,8 @@ const userProfileCtrl = expressAsyncHandler(async (req, res) => {
 //Update profile
 //------------------------------
 const updateUserCtrl = expressAsyncHandler(async (req, res) => {
-  const { _id } = req?.user;
+  const { _id } = req.user;
+  
   validateMongodbId(_id);
   const user = await User.findByIdAndUpdate(
     _id,
@@ -124,11 +125,12 @@ const updateUserCtrl = expressAsyncHandler(async (req, res) => {
       bio: req?.body?.bio,
     },
     {
-      new: true,
-      runValidators: true,
-    }
+          new: true,
+          runValidators: true,
+        }
   );
   res.json(user);
+ 
 });
 
 //------------------------------
@@ -136,23 +138,22 @@ const updateUserCtrl = expressAsyncHandler(async (req, res) => {
 //------------------------------
 
 const updateUserPasswordCtrl = expressAsyncHandler(async (req, res) => {
-  //destructure the login user
   const { _id } = req.user;
   const { password } = req.body;
+
   validateMongodbId(_id);
-  //Find the user by _id
   const user = await User.findById(_id);
 
-  if (password) {
+  if(password) {
     user.password = password;
-    const updatedUser = await user.save();
-    res.json(updatedUser);
-  } else {
+    const updatetedUser  = await user.save();
+    res.json(updatetedUser);
+
+  }else{
     res.json(user);
   }
+
 });
-
-
 
 module.exports = {
   userRegisterCtrl,
@@ -162,6 +163,5 @@ module.exports = {
   fetchUserDetailsCtrl,
   userProfileCtrl,
   updateUserCtrl,
-
+  updateUserPasswordCtrl,
 };
-
