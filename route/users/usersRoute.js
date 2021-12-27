@@ -1,4 +1,5 @@
 const express = require("express");
+const { unfollowUserCtrl } = require("../../controllers/users/usersCtrl");
 const { followingUserCtrl } = require("../../controllers/users/usersCtrl");
 
 const {
@@ -25,5 +26,6 @@ userRoutes.put("/:id", authMiddleware, updateUserCtrl);
 userRoutes.delete("/:id", deleteUsersCtrl);
 userRoutes.get("/:id", fetchUserDetailsCtrl);
 userRoutes.put("/follow/:id",authMiddleware, followingUserCtrl);
+userRoutes.put("/unfollow/:id",authMiddleware,unfollowUserCtrl);
 
 module.exports = userRoutes;
