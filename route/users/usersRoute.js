@@ -1,4 +1,6 @@
 const express = require("express");
+const { followingUserCtrl } = require("../../controllers/users/usersCtrl");
+
 const {
   userRegisterCtrl,
   loginUserCtrl,
@@ -8,6 +10,7 @@ const {
   userProfileCtrl,
   updateUserCtrl,
   updateUserPasswordCtrl,
+  
 } = require("../../controllers/users/usersCtrl");
 const authMiddleware = require("../../middlewares/auth/authMiddleware");
 
@@ -21,5 +24,6 @@ userRoutes.get("/profile/:id", authMiddleware, userProfileCtrl);
 userRoutes.put("/:id", authMiddleware, updateUserCtrl);
 userRoutes.delete("/:id", deleteUsersCtrl);
 userRoutes.get("/:id", fetchUserDetailsCtrl);
+userRoutes.put("/follow/:id",authMiddleware, followingUserCtrl);
 
 module.exports = userRoutes;
