@@ -205,6 +205,46 @@ const unfollowUserCtrl = expressAsyncHandler(async(req,res) => {
   res.json("unfollow the user successfully");
 })
 
+//--------------------
+//Blocked user
+//--------------------
+
+const userBlockedCtrl = expressAsyncHandler( async(req,res) => {
+  const {id} = req.params;
+  validateMongodbId(id);
+
+  const user = await User.findByIdAndUpdate(id,
+    {
+      isBlocked: true,
+  },
+  {new: true}
+  )
+  res.json(user);
+
+})
+
+//---------------------
+//unblocked user
+//---------------------
+
+const userUnBlockedCtrl = expressAsyncHandler( async(req,res) => {
+  const {id} = req.params;
+  validateMongodbId(id);
+
+  const user = await User.findByIdAndUpdate(id,
+    {
+      isBlocked : false,
+  
+    },
+    {new: true}
+    )
+
+    res.json(user);
+})
+
+//--------------E:
+//upload photos
+//-------------------
 
 
 module.exports = {
@@ -218,4 +258,6 @@ module.exports = {
   updateUserPasswordCtrl,
   followingUserCtrl,
   unfollowUserCtrl,
+  userBlockedCtrl,
+  userUnBlockedCtrl,
 };

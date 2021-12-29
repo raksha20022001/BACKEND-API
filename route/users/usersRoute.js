@@ -1,5 +1,8 @@
 const express = require("express");
 const { unfollowUserCtrl } = require("../../controllers/users/usersCtrl");
+const { userUnBlockedCtrl } = require("../../controllers/users/usersCtrl");
+const { profilePhotoUploadCtrl } = require("../../controllers/users/usersCtrl");
+const { userBlockedCtrl } = require("../../controllers/users/usersCtrl");
 const { followingUserCtrl } = require("../../controllers/users/usersCtrl");
 
 const {
@@ -27,5 +30,7 @@ userRoutes.delete("/:id", deleteUsersCtrl);
 userRoutes.get("/:id", fetchUserDetailsCtrl);
 userRoutes.put("/follow/:id",authMiddleware, followingUserCtrl);
 userRoutes.put("/unfollow/:id",authMiddleware,unfollowUserCtrl);
+userRoutes.put("/isBlocked/:id",authMiddleware,userBlockedCtrl);
+userRoutes.put("/isUnBlocked/:id",authMiddleware,userUnBlockedCtrl);
 
 module.exports = userRoutes;

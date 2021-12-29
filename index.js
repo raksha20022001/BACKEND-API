@@ -3,7 +3,9 @@ const dotenv = require("dotenv");
 dotenv.config();
 const dbConnect = require("./config/db/dbConnect");
 const userRoutes = require("./route/users/usersRoute");
+
 const { errorHandler, notFound } = require("./middlewares/error/errorHandler");
+const categoryRoutes = require("./route/category/categoryRoute");
 
 const app = express();
 //DB
@@ -14,6 +16,9 @@ app.use(express.json());
 
 //Users route
 app.use("/api/users", userRoutes);
+
+//category route
+app.use("/api/category",categoryRoutes);
 
 //err handler
 app.use(notFound);
