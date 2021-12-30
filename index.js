@@ -2,12 +2,9 @@ const express = require("express");
 const dbConnect = require("./config/db/dbConnect");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
-<<<<<<< HEAD
 dotenv.config();
-=======
 // code by Saurabh
 const cors = require("cors");
->>>>>>> origin/dev_by_Saurabh
 
 const {errorHandler , notFound }= require("./middlewares/error/errorHandler");
 
