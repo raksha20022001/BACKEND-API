@@ -32,5 +32,6 @@ userRoutes.put("/follow/:id",authMiddleware, followingUserCtrl);
 userRoutes.put("/unfollow/:id",authMiddleware,unfollowUserCtrl);
 userRoutes.put("/isBlocked/:id",authMiddleware,userBlockedCtrl);
 userRoutes.put("/isUnBlocked/:id",authMiddleware,userUnBlockedCtrl);
+userRoutes.put("/profile",authMiddleware,profilePhotoUploadCtrl);
 
 module.exports = userRoutes;

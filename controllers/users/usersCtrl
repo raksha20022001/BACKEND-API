@@ -240,11 +240,15 @@ const userUnBlockedCtrl = expressAsyncHandler( async(req,res) => {
     )
 
     res.json(user);
-})
+});
 
-//--------------E:
+//--------------
 //upload photos
 //-------------------
+
+const profilePhotoUploadCtrl = expressAsyncHandler(  async(req,res) => {
+        console.log("dfjh")
+})
 
 
 module.exports = {
@@ -260,4 +264,5 @@ module.exports = {
   unfollowUserCtrl,
   userBlockedCtrl,
   userUnBlockedCtrl,
+  profilePhotoUploadCtrl,
 };
