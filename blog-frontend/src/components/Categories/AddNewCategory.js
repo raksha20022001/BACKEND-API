@@ -10,7 +10,7 @@ const formSchema = Yup.object({
 });
 
 const AddNewCategory = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   //formik
   const formik = useFormik({
     initialValues: {
@@ -19,10 +19,15 @@ const AddNewCategory = () => {
     onSubmit: values => {
       //dispath the action
       dispatch(createCategoryAction(values));
-      console.log(values);
     },
     validationSchema: formSchema,
   });
+
+  //get data from store
+  const state = useSelector(state => state?.category);
+
+  const { loading, appErr, serverErr, category } = state;
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
@@ -35,6 +40,14 @@ const AddNewCategory = () => {
             <p className="font-medium text-indigo-600 hover:text-indigo-500">
               These are the categories user will select when creating a post
             </p>
+            {/* Display err */}
+            <div>
+              {appErr || serverErr ? (
+                <h2 className="text-red-500 text-center text-lg">
+                  {serverErr} {appErr}
+                </h2>
+              ) : null}
+            </div>
           </p>
         </div>
         {/* Form */}
@@ -64,18 +77,33 @@ const AddNewCategory = () => {
           <div>
             <div>
               {/* Submit */}
-              <button
-                type="submit"
-                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              >
-                <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-                  <PlusCircleIcon
-                    className="h-5 w-5 text-yellow-500 group-hover:text-indigo-400"
-                    aria-hidden="true"
-                  />
-                </span>
-                Add new Category
-              </button>
+              {loading ? (
+                <button
+                  disabled
+                  className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gray-600 "
+                >
+                  <span className="absolute left-0 inset-y-0 flex items-center pl-3">
+                    <PlusCircleIcon
+                      className="h-5 w-5 text-yellow-500 group-hover:text-indigo-400"
+                      aria-hidden="true"
+                    />
+                  </span>
+                  Loading please wait...
+                </button>
+              ) : (
+                <button
+                  type="submit"
+                  className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                >
+                  <span className="absolute left-0 inset-y-0 flex items-center pl-3">
+                    <PlusCircleIcon
+                      className="h-5 w-5 text-yellow-500 group-hover:text-indigo-400"
+                      aria-hidden="true"
+                    />
+                  </span>
+                  Add new Category
+                </button>
+              )}
             </div>
           </div>
         </form>

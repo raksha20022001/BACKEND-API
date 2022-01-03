@@ -4,6 +4,7 @@ import Register from "./components/Users/Register/Register";
 import Login from "./components/Users/Login/Login";
 import Navbar from "./components/Navigation/Navbar";
 import AddNewCategory from "./components/Categories/AddNewCategory";
+import CategoryList from "./components/Categories/CategoryList";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Navbar/>
       <Routes>
         <Route path="/add-category" element={<AddNewCategory/>} />
+        <Route path="/category-list" element={<CategoryList/>} />
         <Route path="/" element={<HomePage/>} />
         <Route path="/Register" element={<Register/>} />
         <Route path="/Login" element={<Login/>} />
