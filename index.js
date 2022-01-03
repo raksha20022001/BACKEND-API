@@ -1,4 +1,6 @@
 const express = require("express");
+const dbConnect = require("./config/db/dbConnect");
+const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
 // code by Saurabh
 const cors = require("cors");
@@ -9,7 +11,8 @@ const app = express();
 
 const userRoutes = require("./route/users/usersRoute");
 
-const { errorHandler, notFound } = require("./middlewares/error/errorHandler");
+dotenv.config();
+//const { errorHandler, notFound } = require("./middlewares/error/errorHandler");
 const categoryRoutes = require("./route/category/categoryRoute");
 
 app.use(bodyParser.urlencoded({extended:false}));
