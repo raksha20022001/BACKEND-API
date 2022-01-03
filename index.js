@@ -12,7 +12,7 @@ const app = express();
 const userRoutes = require("./route/users/usersRoute");
 
 dotenv.config();
-//const { errorHandler, notFound } = require("./middlewares/error/errorHandler");
+
 const categoryRoutes = require("./route/category/categoryRoute");
 
 app.use(bodyParser.urlencoded({extended:false}));
