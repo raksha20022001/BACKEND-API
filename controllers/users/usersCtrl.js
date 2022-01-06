@@ -2,6 +2,10 @@ const expressAsyncHandler = require("express-async-handler");
 const generateToken = require("../../config/token/generateToken");
 const User = require("../../model/user/User");
 const validateMongodbId = require("../../utils/validateMongodbID");
+const sgMail = require("@sendgrid/mail");
+
+
+sgMail.setApiKey(process.env.SEND_GRID_API_KEY );
 
 //-------------------------------------
 //Register
@@ -251,6 +255,31 @@ const profilePhotoUploadCtrl = expressAsyncHandler(  async(req,res) => {
 })
 
 
+//----------------
+//verification ctrl
+
+const generateVerificationTokenCtrl = expressAsyncHandler ( async(req,res) => {
+    try {
+      
+      const msg = {
+        to: 'khushbookrimuz2018@gmail.com', 
+        from: 'khushbookrimuz2018@gmail.com', 
+        subject: 'Sending with SendGrid is Fun',
+        text: 'tum pagal ho gadhi aurat',
+        html: '<strong>tum pagal ho gadhi aurat</strong>',
+      }
+      await sgMail.send(msg);
+      res.json("email sent");
+
+      
+
+    } catch (error) {
+      res.json(error);
+      
+    }
+})
+
+
 module.exports = {
   userRegisterCtrl,
   loginUserCtrl,
@@ -265,4 +294,5 @@ module.exports = {
   userBlockedCtrl,
   userUnBlockedCtrl,
   profilePhotoUploadCtrl,
+  generateVerificationTokenCtrl,
 };

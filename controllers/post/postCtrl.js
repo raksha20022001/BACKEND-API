@@ -17,4 +17,3 @@ const createPostCtrl = expressAsyncHandler( async(req,res) => {
 module.exports = {
     createPostCtrl,
 }
-
