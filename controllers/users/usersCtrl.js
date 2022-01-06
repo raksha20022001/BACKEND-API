@@ -246,32 +246,31 @@ const userUnBlockedCtrl = expressAsyncHandler( async(req,res) => {
     res.json(user);
 });
 
-//--------------
-//upload photos
-//-------------------
-
-const profilePhotoUploadCtrl = expressAsyncHandler(  async(req,res) => {
-        console.log("dfjh")
-})
-
 
 //----------------
 //verification ctrl
 
 const generateVerificationTokenCtrl = expressAsyncHandler ( async(req,res) => {
+  const loginUserId = req.user.id;
+  const user = await User.findById(loginUserId);
+ 
     try {
+   
       
       const msg = {
-        to: 'khushbookrimuz2018@gmail.com', 
-        from: 'khushbookrimuz2018@gmail.com', 
+        to : user.email,
+      
+        from: 
+        {
+          name: 'web blog',
+          email : 'aarushkumar368@gmail.com', 
+        },
         subject: 'Sending with SendGrid is Fun',
-        text: 'tum pagal ho gadhi aurat',
-        html: '<strong>tum pagal ho gadhi aurat</strong>',
+        text: 'this is my blog web app',
+        html: '<strong >this is my blog web appt</strong>',
       }
       await sgMail.send(msg);
-      res.json("email sent");
-
-      
+      res.json("email sent");   
 
     } catch (error) {
       res.json(error);
@@ -293,6 +292,6 @@ module.exports = {
   unfollowUserCtrl,
   userBlockedCtrl,
   userUnBlockedCtrl,
-  profilePhotoUploadCtrl,
+
   generateVerificationTokenCtrl,
 };
