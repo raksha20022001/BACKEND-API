@@ -2,6 +2,10 @@ const expressAsyncHandler = require("express-async-handler");
 const generateToken = require("../../config/token/generateToken");
 const User = require("../../model/user/User");
 const validateMongodbId = require("../../utils/validateMongodbID");
+const sgMail = require("@sendgrid/mail");
+
+
+sgMail.setApiKey("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") ;
 
 //-------------------------------------
 //Register
@@ -240,11 +244,39 @@ const userUnBlockedCtrl = expressAsyncHandler( async(req,res) => {
     )
 
     res.json(user);
-})
+});
 
-//--------------E:
-//upload photos
-//-------------------
+
+//----------------
+//verification ctrl
+
+const generateVerificationTokenCtrl = expressAsyncHandler ( async(req,res) => {
+  const loginUserId = req.user.id;
+  const user = await User.findById(loginUserId);
+ 
+    try {
+   
+      
+      const msg = {
+        to : user.email,
+      
+        from: 
+        {
+          name: 'web blog',
+          email : 'khushbookrimuz2018@gmail.com', 
+        },
+        subject: 'Sending with SendGrid is Fun',
+        text: 'this is my blog web app',
+        html: '<strong >this is my blog web appt</strong>',
+      }
+      await sgMail.send(msg);
+      res.json("email sent");   
+
+    } catch (error) {
+      res.json(error);
+      
+    }
+})
 
 
 module.exports = {
@@ -260,4 +292,6 @@ module.exports = {
   unfollowUserCtrl,
   userBlockedCtrl,
   userUnBlockedCtrl,
+
+  generateVerificationTokenCtrl,
 };
