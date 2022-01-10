@@ -43,7 +43,11 @@ const postSchema = new mongoose.Schema({
     {
         type :mongoose.Schema.Types.ObjectId,
         ref : 'User',
-        required : [true,"please Author is required"],
+        required : [true,"please User is required"],
+    },
+    description : {
+        type : String,
+        required : [true,"Please description is "],
     },
     image : {
         type :  String,

@@ -36,7 +36,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/category",categoryRoutes);
 
 //post route
-app.use("/api/post",postRoutes);
+app.use("/api/posts",postRoutes);
 
 //err handler
 app.use(notFound);
